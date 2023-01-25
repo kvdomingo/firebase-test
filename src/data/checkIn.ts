@@ -8,7 +8,8 @@ export interface ICheckIn {
   recordDate: string;
 }
 
-export async function getCheckIns() {
-  const docRef = await getDocs(collection(db, "checkIns"));
-  return docRef.docs.map(doc => doc.data());
+export async function getCheckIns(): Promise<ICheckIn[]> {
+  const snapshot = await getDocs(collection(db, "checkIns"));
+  const docs = snapshot.docs.map(doc => doc.data());
+  return docs as ICheckIn[];
 }
