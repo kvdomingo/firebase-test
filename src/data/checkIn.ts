@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { getFirestore } from "firebase/firestore";
+import { getApp } from "../firebase";
 
 export interface ICheckIn {
   duration: number;
@@ -9,6 +10,7 @@ export interface ICheckIn {
 }
 
 export async function getCheckIns(): Promise<ICheckIn[]> {
+  const db = getFirestore(await getApp());
   const snapshot = await getDocs(collection(db, "checkIns"));
   const docs = snapshot.docs.map(doc => doc.data());
   return docs as ICheckIn[];
